@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="speechtotext.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        var app = angular.module('HomeApp', []);
+        app.controller('homeController',function ($scope,$http) {
+            $scope.logout=function(){
+                window.location.href="LoginPage.html"
+            }
+            $scope.ngSpeechRecognition=function(){
+                SpeechRecognition($scope);
+            }
+            $scope.gkg_img="Images/knowledge-graph.jpg";
+            $scope.username=sessionStorage.getItem("FBName");
+            $scope.SearchGoogle=function(){
+                var query = 'https://kgsearch.googleapis.com/v1/entities:search?query='+$scope.txtSearch.replace(' ','+')+'&key=AIzaSyC5YlF6OB7EVbG48qtWsyiYYsySPUlRyug&limit=1&indent=True';
+                $http.get(query).then(function(data) {
+                    console.log(data);
+
+                    $scope.gkg_Name="Name : "+data.data.itemListElement[0].result.name;
+                    $scope.gkg_Description=data.data.itemListElement[0].result.name+" is a/an "+data.data.itemListElement[0].result.description;
+                    $scope.gkg_DetailedDescription=data.data.itemListElement[0].result.detailedDescription.articleBody;
+                    $scope.gkg_img=data.data.itemListElement[0].result.image.contentUrl;
+                })
+            }
+        })
+
+    </script>
+    <style type="text/css">
+        footer {
+            position: fixed;
+            height: 80px;
+            bottom: 0;
+            width: 100%;
+        }
+        .borderless td, .borderless th {
+            border: none !important;
+            padding: 4px !important;
+        }
+        .borderless1 td, .borderless1 th {
+            border: none !important;
+        }
+    </style>
+</head>
+<body ng-app="HomeApp" ng-controller="homeController" style="background-color: #53cfff">
+<div class="container-fluid" style="height: 85px;background-color: whitesmoke">
+    <div class="col-xs-11">
+        <p style="color: #53cfff;font-size: 50px;font-weight:  600;font-family: forte;">Aprendices </p>
+    </div>
+    <div class="col-xs-1 align-bottom">
+        <button class="form-control align-bottom" style="color: white;background-color: #53cfff;margin-top: 30px" ng-click="logout()">Logout</button>
+    </div>
+</div>
+<div class="container row">
+Welcome <label ng-bind="username"></label>,
+</div>
+<div class="container-fluid col-xs-12">
+<table class="borderless table col-xs-12">
+    <tr>
+        <td>
+    <input type="text" ng-model="txtSearch" class="form-control"></td>
+        <td>
+    <button ng-click="SearchGoogle()" class="btn">Search</button></td>
+        <td><button ng-click="ngSpeechRecognition()">listen</button></td>
+    </tr>
+</table>
+</div>
+<div class="container">
+<table>
+    <tr>
+        <td>
+            <img class="img-thumbnail"  ng-src="{{gkg_img}}">
+        </td>
+        <td>
+            <table class="borderless table">
+                <tr>
+                    <td>
+                        <label ng-bind="gkg_Name"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label ng-bind="gkg_Description"></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label ng-bind="gkg_DetailedDescription"></label>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</div>
+<footer class="page-footer font-small blue pt-4">
+<div class="container-fluid footer-copyright text-center py-3">© 2018 Copyright:
+    <a href="AboutPage.html"> About</a>
+    <a href="ContactUs.html"> Contact Us</a>
+</div>
+</footer>
+</body>
+</html>
