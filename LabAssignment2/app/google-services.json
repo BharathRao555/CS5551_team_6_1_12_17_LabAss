@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "819250526111",
+    "firebase_url": "https://icp7-5c1b4.firebaseio.com",
+    "project_id": "icp7-5c1b4",
+    "storage_bucket": "icp7-5c1b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819250526111:android:9c94013d37ede1d3",
+        "android_client_info": {
+          "package_name": "com.example.hiresh.labassignment2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "819250526111-80sl9t88kr9rv2dotte3jrvdv480pufo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7Dy34P9yQbNToCact_HW4e4iD0nN9_9I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
