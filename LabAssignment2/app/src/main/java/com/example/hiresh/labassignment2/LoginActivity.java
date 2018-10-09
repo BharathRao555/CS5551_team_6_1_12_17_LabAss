@@ -42,8 +42,35 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             //Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             //startActivity(intent);
-                            Toast.makeText(LoginActivity.this, "pass", Toast.LENGTH_LONG).show();
-                            finish();
+                            Intent redirect = new Intent(LoginActivity.this, HomeActivity.class);
+                            startActivity(redirect);
+                        }
+                    }
+                });
+    }
+    protected void Register(View v){
+        String email = ((EditText) findViewById(R.id.txtuser)).getText().toString();
+        final String password = ((EditText) findViewById(R.id.txtpass)).getText().toString();
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        //progressBar.setVisibility(View.GONE);
+                        if (!task.isSuccessful()) {
+                            // there was an error
+                            if (password.length() < 6) {
+                                //inputPassword.setError(getString(R.string.minimum_password));
+                            } else {
+                                Toast.makeText(LoginActivity.this, "failes", Toast.LENGTH_LONG).show();
+                            }
+                        } else {
+                            //Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            //startActivity(intent);
+                            Intent redirect = new Intent(LoginActivity.this, HomeActivity.class);
+                            startActivity(redirect);
                         }
                     }
                 });
