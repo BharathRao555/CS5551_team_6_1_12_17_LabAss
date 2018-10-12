@@ -53,8 +53,6 @@ public class HomeActivity extends AppCompatActivity {
     private static final int MAX_DIMENSION = 1200;
 
     private static final String TAG = HomeActivity.class.getSimpleName();
-    private static final int GALLERY_PERMISSIONS_REQUEST = 0;
-    private static final int GALLERY_IMAGE_REQUEST = 1;
     public static final int CAMERA_PERMISSIONS_REQUEST = 2;
     public static final int CAMERA_IMAGE_REQUEST = 3;
 
@@ -65,60 +63,29 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page);
-        /*Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-            /*AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
-            builder
-                    .setMessage("hello")
-                    .setPositiveButton("Gallery", (dialog, which) -> startGalleryChooser())
-                    .setNegativeButton("Camera", (dialog, which) -> startCamera());
-            builder.create().show();*/
             startCamera();
         });
 
         mImageDetails = findViewById(R.id.image_details);
-        //mMainImage = findViewById(R.id.main_image);
-    }
-
-    public void startGalleryChooser() {
-        if (PermissionUtils.requestPermission(this, GALLERY_PERMISSIONS_REQUEST, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            Intent intent = new Intent();
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, "Select a photo"),
-                    GALLERY_IMAGE_REQUEST);
-        }
     }
 
     public void startCamera() {
         if (PermissionUtils.requestPermission(
                 this,
                 CAMERA_PERMISSIONS_REQUEST,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA)) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-           /* Uri photoUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", getCameraFile());
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);*/
             startActivityForResult(intent, CAMERA_IMAGE_REQUEST);
         }
-    }
-
-    public File getCameraFile() {
-        File dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        return new File(dir, FILE_NAME);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == GALLERY_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
-            uploadImage(data);
-        } else if (requestCode == CAMERA_IMAGE_REQUEST && resultCode == RESULT_OK) {
+        if (requestCode == CAMERA_IMAGE_REQUEST && resultCode == RESULT_OK) {
             Uri photoUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", getCameraFile());
             uploadImage(data);
         }
@@ -132,11 +99,6 @@ public class HomeActivity extends AppCompatActivity {
             case CAMERA_PERMISSIONS_REQUEST:
                 if (PermissionUtils.permissionGranted(requestCode, CAMERA_PERMISSIONS_REQUEST, grantResults)) {
                     startCamera();
-                }
-                break;
-            case GALLERY_PERMISSIONS_REQUEST:
-                if (PermissionUtils.permissionGranted(requestCode, GALLERY_PERMISSIONS_REQUEST, grantResults)) {
-                    startGalleryChooser();
                 }
                 break;
         }
