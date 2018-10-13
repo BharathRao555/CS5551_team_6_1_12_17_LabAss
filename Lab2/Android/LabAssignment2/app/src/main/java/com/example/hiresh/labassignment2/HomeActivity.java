@@ -70,6 +70,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         mImageDetails = findViewById(R.id.image_details);
+        mMainImage=findViewById(R.id.image);
     }
 
     public void startCamera() {
