@@ -42,4 +42,61 @@ angular.module('starter.controllers', ['ionic', 'ngCordova'])
 
   }
 })
+//angular.module('starter.controllers', ['ionic', 'ngCordova'])
+.controller("homeController", function($scope, $http){
+
+  $scope.getDetails = function (city,venue) {
+    var query = 'https://api.foursquare.com/v2/venues/search?client_id=OAMFIYOQVREIOISWVD51JNUVXLGOBEXNEXQCEWUHDUOTZTMJ&' +
+      'client_secret=1PF53W13MKJKSCF01UDPHQLOGEY2D15EG3OWAUUMEN5DC34Q&v=20160215&limit=5&near=' + city + '&query=' + venue
+    $http.get(query).then(function (data) {
+      console.log(data);
+      $scope.details = data.data.response.venues;
+    });
+  }
+
+})
+//angular.module('starter.controllers', ['ionic', 'ngCordova'])
+.controller("FirebaseController", function($scope, $state, $firebaseAuth) {
+
+  var fbAuth = $firebaseAuth();
+
+  $scope.login = function(username, password) {
+    fbAuth.$signInWithEmailAndPassword(username,password).then(function(authData) {
+      //$state.go("Homepage");
+    }).catch(function(error) {
+      console.error("ERROR: " + error);
+    });
+  }
+
+  $scope.register = function(username, password) {
+    fbAuth.$createUserWithEmailAndPassword(username,password).then(function(userData) {
+      return fbAuth.$signInWithEmailAndPassword(username,
+        password);
+    }).then(function(authData) {
+      //$state.go("Homepage");
+    }).catch(function(error) {
+      console.error("ERROR: " + error);
+    });
+  }
+  $scope.googleSignin=function(){
+    var provider = new firebase.auth.GoogleAuthProvider();
+    provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+    firebase.auth().signInWithPopup(provider).then(function (result) {
+      var token = result.credential.accessToken;
+      // The signed-in user info.
+      var user = result.user;
+      //$state.go("Homepage");
+    }).catch(function (error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      alert(errorMessage);
+      // ...
+    });
+  }
+});
 

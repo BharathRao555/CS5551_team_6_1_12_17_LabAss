@@ -1,0 +1,23 @@
+<ion-view title="Four Square">
+  <ion-content>
+<div>
+  <label class = "item item-input">
+    <input type = "text" placeholder = "Enter a City" ng-model="city" />
+  </label>
+  <label class = "item item-input">
+    <input type="text" placeholder = "Search for eg:Restuarants" ng-model="keyword">
+  </label>
+    <button class="button button-positive" ng-click="getDetails(city,keyword)">show Details</button>
+</div>
+    <h6>The following {{keyword}} are present in {{city}}</h6>
+    <div class="row header">
+      <div class="col style=font-weight:bold "><p><strong>Name</strong></p></div>
+      <div class="col style=font-weight:bold"><p><strong>Address</strong></p></div>
+    </div>
+    <div class="row" ng-repeat="det in details | limitTo:5">
+      <div class="col">{{det.name}}</div>
+      <div class="col">{{det.location.address}}</div>
+    </div>
+
+  </ion-content>
+</ion-view>
