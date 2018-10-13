@@ -14,12 +14,20 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />-->
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:background="@drawable/common_full_open_on_phone">
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -35,7 +43,12 @@
         <EditText
             android:id="@+id/txtpass"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,5 +59,7 @@
             android:layout_height="wrap_content"
             android:text="Register"
             android:onClick="Register"/>
+        </LinearLayout>
     </LinearLayout>
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
