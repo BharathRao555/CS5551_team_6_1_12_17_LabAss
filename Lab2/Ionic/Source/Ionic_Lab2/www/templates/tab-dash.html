@@ -1,0 +1,18 @@
+<ion-view view-title="Google Maps">
+  <ion-content class="padding">
+    <div class="list list-inset">
+      <label class="item item-input">
+        <input ng-model="source" type="text" placeholder="source" />
+      </label>
+      <label class="item item-input">
+        <input ng-model="destination" type="text" placeholder="destination" />
+      </label>
+    </div>
+    <div class="padding-left padding-right">
+      <div class="button-bar">
+        <a class="button button-icon" ng-click="getDistance(source,destination)">getDirection</a>
+      </div>
+    </div>
+    <div id="map" data-tap-disabled="true"></div>
+  </ion-content>
+</ion-view>
