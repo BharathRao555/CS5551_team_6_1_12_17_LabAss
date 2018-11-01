@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "test",
-    "start":"node server.js"
+    "start": "node server.js"
   },
   "author": "hiresh",
   "license": "ISC",
@@ -13,6 +13,9 @@
     "cors": "^2.8.4",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
-    "request": "^2.88.0"
+    "nodemailer": "^4.6.8",
+    "nodemailer-smtp-transport": "^2.7.4",
+    "request": "^2.88.0",
+    "xoauth2": "^1.2.0"
   }
 }
