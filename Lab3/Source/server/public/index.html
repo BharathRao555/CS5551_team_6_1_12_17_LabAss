@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <link href="https://unpkg.com/ionicons@4.4.6/dist/css/ionicons.min.css" rel="stylesheet">
+
+    <style type="text/css">
+        .borderless td, .borderless th {
+            border: none !important;
+            padding: 4px !important;
+            color: midnightblue;
+        }
+        .borderless1 td, .borderless1 th {
+            border: none !important;
+        }
+        body
+        {
+            background-color: midnightblue;
+            color: whitesmoke;
+        }
+        button{
+            background-color: transparent;
+        }
+        input{
+            color: midnightblue;
+        }
+    </style>
+    <script>
+        var app = angular.module('application', []);
+        app.controller('controller', function($scope,$http) {
+            var init = function(){
+                var query='/Hiresh/Get'
+                $http.get(query).then(function(data) {
+                    console.log(data.data);
+                    $scope.Studentlist=data.data;
+                });
+            }
+            $scope.InsertData=function(){
+                var query='/Hiresh/Create?id='+$scope.classid+'&name='+$scope.studentname
+                    +'&cos='+$scope.cos+'&major='+$scope.majors+'&minor='+$scope.minor
+                $http.get(query).then(function(data) {
+                    init();
+                });
+            }
+            $scope.update=function(){
+                //console.log(this.data.CourseofStudy);
+                var query='/Hiresh/Update?id='+$scope.classid1+'&name='+$scope.studentname1
+                    +'&cos='+$scope.cos1+'&major='+$scope.majors1+'&minor='+$scope.minor1+'&oid='+$scope.oid1
+                $http.get(query).then(function(data) {
+                    init();
+                });
+            }
+            $scope.showupdate=function() {
+                console.log(this.data._id.$oid);
+                $scope.classid1=this.data.ClassID;
+                $scope.studentname1=this.data.StudentName;
+                $scope.cos1=this.data.CourseofStudy;
+                $scope.majors1=this.data.Major;
+                $scope.minor1=this.data.Minor;
+                $scope.oid1=this.data._id.$oid;
+                document.getElementById('btnupdate').click();
+            }
+            $scope.DeleteRecord=function(){
+                //console.log(this.data.CourseofStudy);
+                var query='/Hiresh/Delete?&oid='+this.data._id.$oid
+                $http.get(query).then(function(data) {
+                    init();
+                });
+            }
+
+            $scope.filter=function(){
+                var query='/Hiresh/Search?major='+$scope.major;
+                $http.get(query).then(function(data) {
+                    $scope.Studentlist=data.data;
+                });
+            }
+            $scope.Reset=function()
+            {
+                init();
+            }
+            init();
+        });
+    </script>
+</head>
+<body  ng-app="application" ng-controller="controller">
+<div class="container-fluid" style="height: 80px;margin-bottom: 20px;background-color: whitesmoke;color: midnightblue">
+    <label style="
+    font-size: 45px;
+    text-align: center;
+    width: 100%;
+"> NodeJS - Question</label>
+</div>
+<div align="center" id="myModal" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     style="height: 60%;width: 50%;background-color: whitesmoke;display: none;margin-left: 25%;margin-top: 8%;padding-left: 17px;">
+    <div class="modal-dialog modal-dialog-centered">
+        <table align="center" class="table borderless" style="width: 50%">
+            <tr>
+                <td colspan="2" style="text-align: center;font-size: 16px;font-weight: 900" width="100%">
+                    Question Details
+                </td>
+            </tr>
+            <tr>
+                <td><label>Question ID</label></td>
+                <td><input class="form-control" type="text" ng-model="classid"></td>
+            </tr>
+            <tr>
+                <td><label>Question</label></td>
+                <td><input class="form-control" type="text" ng-model="studentname"></td>
+            </tr>
+            <tr>
+                <td><label>Answer</label></td>
+                <td><input class="form-control" type="text" ng-model="cos"></td>
+            </tr>
+            <tr>
+                <td><label>Key1</label></td>
+                <td><input class="form-control" type="text" ng-model="majors"></td>
+            </tr>
+            <tr>
+                <td><label>Key1</label></td>
+                <td><input class="form-control" type="text" ng-model="minor"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button class="btn btn-lg btn-primary" style="background-color: midnightblue;width: 100%" type="submit" ng-click="InsertData()">Insert</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div align="center" id="myModal1" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     style="height: 60%;width: 50%;background-color: whitesmoke;display: none;margin-left: 25%;margin-top: 8%;padding-left: 17px;">
+    <div class="modal-dialog modal-dialog-centered">
+        <table align="center" class="table borderless" style="width: 50%">
+            <tr>
+                <td colspan="2" style="text-align: center;font-size: 16px;font-weight: 900" width="100%">
+                    Question Details
+                </td>
+            </tr>
+            <tr>
+                <td><label>Question ID</label></td>
+                <td><input class="form-control" type="text" ng-model="classid1">
+                    <input type="text" style="display: none" ng-model="oid1">
+                </td>
+
+            </tr>
+            <tr>
+                <td><label>Question</label></td>
+                <td><input class="form-control" type="text" ng-model="studentname1"></td>
+            </tr>
+            <tr>
+                <td><label>Answer</label></td>
+                <td><input class="form-control" type="text" ng-model="cos1"></td>
+            </tr>
+            <tr>
+                <td><label>Key1</label></td>
+                <td><input class="form-control" type="text" ng-model="majors1"></td>
+            </tr>
+            <tr>
+                <td><label>Key2</label></td>
+                <td><input class="form-control" type="text" ng-model="minor1"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button class="btn btn-lg btn-primary" style="background-color: midnightblue;width: 100%" type="submit" ng-click="update()">Update</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="container">
+    <table  class="table">
+        <tr>
+            <td colspan="2"> Filter by : Question</td>
+            <td colspan="2">
+                <div class="row" style="text-align: center">
+                    <input style="width: 60%" type="text" ng-model="major"  class="form-control col-xs-8">
+                    <button type="submit" ng-click="filter()">Search</button>
+                </div>
+            </td>
+            <td><button type="button" data-toggle="modal" data-target="#myModal">
+                <i class="icon ion-md-add"></i>
+                <!--<ion-icon name="add-circle-outline"></ion-icon>-->
+            </button>
+                <button type="button" ng-click="Reset()">
+                    <i class="icon ion-md-refresh"></i>
+                    <!--<ion-icon name="add-circle-outline"></ion-icon>-->
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                QuestionID
+            </td>
+            <td>
+                Question
+            </td>
+            <td>Answer</td>
+            <td>Key1</td>
+            <td>Key2</td>
+            <td>update</td>
+            <td>Delete</td>
+        </tr>
+        <tr ng-repeat="data in Studentlist">
+            <td>{{data.ClassID}}</td>
+            <td>{{data.StudentName}}</td>
+            <td>{{data.CourseofStudy}}</td>
+            <td>{{data.Major}}</td>
+            <td>{{data.Minor}}</td>
+            <td><button id="id-{{$index}}" ng-click="showupdate()">update</button>
+                <button id="btnupdate" style="display: none" type="button" data-toggle="modal" data-target="#myModal1">
+                    <i class="icon ion-md-add"></i>
+                    <!--<ion-icon name="add-circle-outline"></ion-icon>-->
+                </button></td>
+            <td><button id="id1-{{$index}}" ng-click="DeleteRecord()">Delete</button>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
