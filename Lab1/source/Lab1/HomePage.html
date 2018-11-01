@@ -21,7 +21,7 @@
             $scope.gkg_img="Images/knowledge-graph.jpg";
             $scope.username=sessionStorage.getItem("FBName");
             $scope.SearchGoogle=function(){
-                var query = 'https://kgsearch.googleapis.com/v1/entities:search?query='+$scope.txtSearch.replace(' ','+')+'&key=AIzaSyC5YlF6OB7EVbG48qtWsyiYYsySPUlRyug&limit=1&indent=True';
+                var query = 'https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch='+$scope.txtSearch+'&format=json';
                 $http.get(query).then(function(data) {
                     console.log(data);
 
